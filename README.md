@@ -1,7 +1,7 @@
 # Simple Checklist Develop
-<img width="1080" height="813" alt="showcasing" src="https://github.com/user-attachments/assets/9102635f-ad51-4fee-80bc-d0918cdea42a" />
-
 An Obsidian plugin that collects open `- [ ]` todos into a single side panel, scoped to the current note, its folder and subfolders, or the entire vault.
+
+Maintained by [Jimmy-2001](https://github.com/Jimmy-2001). This is a fork of [Simple Checklist](https://github.com/l-4553/obsidian-simple-checklist), originally created by **Lasse Krähner**. The original MIT license and copyright notice are retained; see [LICENSE](LICENSE).
 
 ## Features
 
@@ -53,12 +53,20 @@ Open the checklist panel via:
 
 This development fork uses the plugin ID `simple-checklist-develop`. Its panel type, styles, commands, and saved settings are separate from the original plugin, so both can be enabled in the same vault. Both panels still read and edit the same Markdown tasks.
 
+Download the latest build from [GitHub Releases](https://github.com/Jimmy-2001/obsidian-simple-checklist/releases/latest). The ZIP contains the `simple-checklist-develop` folder ready to copy into the vault. This fork is distributed through GitHub and is not listed in the Obsidian Community directory.
+
 1. Create `.obsidian/plugins/simple-checklist-develop/` inside the vault.
 2. Copy this build's `main.js`, `manifest.json`, and `styles.css` into that folder.
 3. Restart Obsidian and enable **Simple Checklist Develop** under Settings → Community plugins.
 4. Run **Simple Checklist Develop: Open Checklist (Develop) panel** from the command palette.
 
 The original [Simple Checklist](https://github.com/l-4553/obsidian-simple-checklist) plugin and its settings remain in their own folder. This fork starts with its own default settings.
+
+To update an existing installation, disable **Simple Checklist Develop**, replace its `main.js`, `manifest.json`, and `styles.css`, then restart Obsidian and re-enable the plugin. Keep its `data.json` to retain settings.
+
+## Privacy
+
+The plugin reads and edits Markdown files within the vault. It does not send note contents to remote services, collect telemetry, or require an account. Links in todos open only when selected.
 
 ## Development
 

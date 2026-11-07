@@ -1,10 +1,10 @@
 {
   "id": "simple-checklist-develop",
   "name": "Simple Checklist Develop",
-  "version": "1.10.12",
+  "version": "1.10.13",
   "minAppVersion": "1.7.2",
-  "description": "Development fork of Simple Checklist with current-note, folder, and vault todo scopes.",
-  "author": "Lasse",
-  "authorUrl": "https://github.com/l-4553",
+  "description": "Show open todos from the current note, its folder and subfolders, or the entire vault.",
+  "author": "Jimmy-2001",
+  "authorUrl": "https://github.com/Jimmy-2001",
   "isDesktopOnly": false
 }

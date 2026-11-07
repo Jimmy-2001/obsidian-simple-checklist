@@ -1,6 +1,6 @@
 {
   "name": "obsidian-simple-checklist-develop",
-  "version": "1.10.12",
+  "version": "1.10.13",
   "description": "Development fork of Simple Checklist with selectable todo scopes",
   "main": "main.js",
   "scripts": {
