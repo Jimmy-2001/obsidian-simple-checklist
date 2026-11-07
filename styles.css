@@ -1,33 +1,33 @@
-.checklist-scope {
+.simple-checklist-develop-scope {
   padding: 8px 12px;
   border-bottom: 1px solid var(--background-modifier-border);
 }
 
-.checklist-scope select {
+.simple-checklist-develop-scope select {
   width: 100%;
   max-width: 100%;
 }
 
-.checklist-scope-context {
+.simple-checklist-develop-scope-context {
   margin-top: 6px;
   color: var(--text-muted);
   font-size: var(--font-ui-smaller);
   overflow-wrap: anywhere;
 }
 
-.checklist-container {
+.simple-checklist-develop-container {
   padding: 8px 0;
   display: flex;
   flex-direction: column;
 }
 
-.checklist-group {
+.simple-checklist-develop-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 4px;
 }
 
-.checklist-group-header {
+.simple-checklist-develop-group-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,7 +35,7 @@
   padding: 6px 12px 2px;
 }
 
-.checklist-group-title {
+.simple-checklist-develop-group-title {
   font-size: var(--font-ui-smaller);
   font-weight: 600;
   color: var(--text-muted);
@@ -44,12 +44,12 @@
   cursor: pointer;
 }
 
-.checklist-group-title:hover {
+.simple-checklist-develop-group-title:hover {
   color: var(--text-normal);
   text-decoration: underline;
 }
 
-.checklist-group-pin {
+.simple-checklist-develop-group-pin {
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -59,68 +59,68 @@
   transition: opacity 0.1s ease, color 0.1s ease;
 }
 
-.checklist-group-pin svg {
+.simple-checklist-develop-group-pin svg {
   width: 14px;
   height: 14px;
 }
 
-.checklist-group:hover .checklist-group-pin {
+.simple-checklist-develop-group:hover .simple-checklist-develop-group-pin {
   opacity: 0.55;
 }
 
-.checklist-group-pin:hover {
+.simple-checklist-develop-group-pin:hover {
   opacity: 1;
   color: var(--text-normal);
 }
 
-.checklist-group.is-pinned .checklist-group-pin {
+.simple-checklist-develop-group.is-pinned .simple-checklist-develop-group-pin {
   opacity: 1;
   color: var(--text-accent);
 }
 
-.checklist-divider {
+.simple-checklist-develop-divider {
   height: 1px;
   background-color: var(--background-modifier-border);
   margin: 6px 12px 4px;
 }
 
 /* "Hide note titles" mode: only the todos, no note headers or dividers. */
-.checklist-container.is-bare .checklist-group-header,
-.checklist-container.is-bare .checklist-divider {
+.simple-checklist-develop-container.is-bare .simple-checklist-develop-group-header,
+.simple-checklist-develop-container.is-bare .simple-checklist-develop-divider {
   display: none;
 }
 
-.checklist-container.is-bare .checklist-group {
+.simple-checklist-develop-container.is-bare .simple-checklist-develop-group {
   margin-bottom: 0;
 }
 
-.checklist-item {
+.simple-checklist-develop-item {
   display: flex;
   align-items: flex-start;
   gap: 8px;
   /* Nested todos mirror the note's structure: 2ch (~2 spaces) of extra indent per level. */
   padding: 4px 12px;
-  padding-left: calc(12px + var(--checklist-depth, 0) * 2ch);
+  padding-left: calc(12px + var(--simple-checklist-develop-depth, 0) * 2ch);
   border-radius: 4px;
   cursor: default;
   position: relative;
 }
 
-.checklist-item:hover {
+.simple-checklist-develop-item:hover {
   background-color: var(--background-modifier-hover);
 }
 
-.checklist-item-dragging {
+.simple-checklist-develop-item-dragging {
   opacity: 0.45;
 }
 
 /* Drop position while dragging a todo: an accent line on the row's top or bottom
    edge, indented to the row's depth. Absolutely positioned, so nothing shifts. */
-.checklist-drop-before::before,
-.checklist-drop-after::after {
+.simple-checklist-develop-drop-before::before,
+.simple-checklist-develop-drop-after::after {
   content: "";
   position: absolute;
-  left: calc(12px + var(--checklist-depth, 0) * 2ch);
+  left: calc(12px + var(--simple-checklist-develop-depth, 0) * 2ch);
   right: 12px;
   height: 2px;
   border-radius: 1px;
@@ -128,15 +128,15 @@
   pointer-events: none;
 }
 
-.checklist-drop-before::before {
+.simple-checklist-develop-drop-before::before {
   top: -1px;
 }
 
-.checklist-drop-after::after {
+.simple-checklist-develop-drop-after::after {
   bottom: -1px;
 }
 
-.checklist-checkbox {
+.simple-checklist-develop-checkbox {
   flex-shrink: 0;
   width: 15px;
   height: 15px;
@@ -148,12 +148,12 @@
   overflow: visible;
 }
 
-.checklist-checkbox:hover {
+.simple-checklist-develop-checkbox:hover {
   border-color: var(--checkbox-color, var(--interactive-accent));
   background-color: var(--background-modifier-hover);
 }
 
-.checklist-text {
+.simple-checklist-develop-text {
   flex: 1;
   font-family: var(--font-text);
   font-size: var(--font-ui-small);
@@ -163,12 +163,12 @@
   word-break: break-word;
 }
 
-.checklist-text:hover {
+.simple-checklist-develop-text:hover {
   color: var(--text-normal);
   text-decoration: underline;
 }
 
-.checklist-inline-code {
+.simple-checklist-develop-inline-code {
   font-family: var(--font-monospace);
   font-size: 0.85em;
   padding: 0.1em 0.35em;
@@ -178,23 +178,23 @@
   white-space: pre-wrap;
 }
 
-.checklist-inline-highlight {
+.simple-checklist-develop-inline-highlight {
   background-color: var(--highlight-background, var(--text-highlight-bg));
   color: var(--text-normal);
 }
 
-.checklist-inline-link {
+.simple-checklist-develop-inline-link {
   color: var(--link-color);
   text-decoration: none;
   cursor: pointer;
 }
 
-.checklist-inline-link:hover {
+.simple-checklist-develop-inline-link:hover {
   color: var(--link-color-hover);
   text-decoration: underline;
 }
 
-.checklist-trash {
+.simple-checklist-develop-trash {
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -209,15 +209,15 @@
   border-radius: 3px;
 }
 
-.checklist-item:hover .checklist-trash {
+.simple-checklist-develop-item:hover .simple-checklist-develop-trash {
   opacity: 1;
 }
 
-.checklist-trash:hover {
+.simple-checklist-develop-trash:hover {
   color: var(--text-error);
 }
 
-.checklist-empty {
+.simple-checklist-develop-empty {
   padding: 16px 12px;
   color: var(--text-muted);
   font-size: var(--font-ui-small);
@@ -225,15 +225,15 @@
 }
 
 /* Confetti particle */
-.checklist-confetti-particle {
+.simple-checklist-develop-confetti-particle {
   position: fixed;
   pointer-events: none;
   border-radius: 2px;
-  animation: checklist-confetti-fall linear forwards;
+  animation: simple-checklist-develop-confetti-fall linear forwards;
   z-index: 9999;
 }
 
-@keyframes checklist-confetti-fall {
+@keyframes simple-checklist-develop-confetti-fall {
   0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
   100% { opacity: 0; transform: translateY(60px) rotate(360deg); }
 }

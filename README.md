@@ -1,4 +1,4 @@
-# Simple Checklist
+# Simple Checklist Develop
 <img width="1080" height="813" alt="showcasing" src="https://github.com/user-attachments/assets/9102635f-ad51-4fee-80bc-d0918cdea42a" />
 
 An Obsidian plugin that collects open `- [ ]` todos into a single side panel, scoped to the current note, its folder and subfolders, or the entire vault.
@@ -23,7 +23,7 @@ An Obsidian plugin that collects open `- [ ]` todos into a single side panel, sc
 ### Display
 
 - **Note sort order** — order groups by most/least recently modified, or note name (A–Z / Z–A)
-- **Hide note titles** — show only the todos, without note titles; dragging then only reorders todos within their own note. Also toggled from the panel header button or the **Toggle note titles in Checklist panel** command
+- **Hide note titles** — show only the todos, without note titles; dragging then only reorders todos within their own note. Also toggled from the panel header button or the **Toggle note titles in Checklist (Develop) panel** command
 
 ### Filters
 
@@ -47,13 +47,18 @@ An Obsidian plugin that collects open `- [ ]` todos into a single side panel, sc
 
 Open the checklist panel via:
 - The checklist icon in the left ribbon
-- The command palette: **Open Checklist panel**
+- The command palette: **Open Checklist (Develop) panel**
 
 ## Installation
 
-Search for **Simple Checklist** in Settings → Community plugins → Browse.
+This development fork uses the plugin ID `simple-checklist-develop`. Its panel type, styles, commands, and saved settings are separate from the original plugin, so both can be enabled in the same vault. Both panels still read and edit the same Markdown tasks.
 
-Or add via [community.obsidian.md/plugins/simple-checklist](https://community.obsidian.md/plugins/simple-checklist)
+1. Create `.obsidian/plugins/simple-checklist-develop/` inside the vault.
+2. Copy this build's `main.js`, `manifest.json`, and `styles.css` into that folder.
+3. Restart Obsidian and enable **Simple Checklist Develop** under Settings → Community plugins.
+4. Run **Simple Checklist Develop: Open Checklist (Develop) panel** from the command palette.
+
+The original [Simple Checklist](https://github.com/l-4553/obsidian-simple-checklist) plugin and its settings remain in their own folder. This fork starts with its own default settings.
 
 ## Development
 

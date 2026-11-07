@@ -1,9 +1,9 @@
 {
-  "id": "simple-checklist",
-  "name": "Simple Checklist",
+  "id": "simple-checklist-develop",
+  "name": "Simple Checklist Develop",
   "version": "1.10.12",
   "minAppVersion": "1.7.2",
-  "description": "Side panel showing open todos from the current note, its folder, or the entire vault.",
+  "description": "Development fork of Simple Checklist with current-note, folder, and vault todo scopes.",
   "author": "Lasse",
   "authorUrl": "https://github.com/l-4553",
   "isDesktopOnly": false

@@ -37,9 +37,9 @@ class Plugin {
   async loadData() { return this.storedData ?? null; }
   async saveData(data) { this.storedData = JSON.parse(JSON.stringify(data)); }
   registerEvent() {}
-  registerView(type, factory) { this.viewFactory = factory; }
-  addRibbonIcon() {}
-  addCommand() {}
+  registerView(type, factory) { this.registeredViewType = type; this.viewFactory = factory; }
+  addRibbonIcon(icon, title) { this.ribbonTitle = title; }
+  addCommand(command) { (this.commands ??= []).push(command); }
   addSettingTab(tab) { this.settingTab = tab; }
 }
 
@@ -89,6 +89,24 @@ async function fixture() {
 function paths(plugin) {
   return Array.from(new Set(plugin.getAllTodos().map((todo) => todo.file.path))).sort();
 }
+
+test("the development plugin uses its own view and command labels", async () => {
+  const { plugin, workspace } = await fixture();
+  await plugin.onload();
+  assert.equal(plugin.registeredViewType, "simple-checklist-develop");
+  const view = plugin.viewFactory({});
+  assert.equal(view.getViewType(), "simple-checklist-develop");
+  assert.equal(view.getDisplayText(), "Checklist (Develop)");
+  assert.equal(plugin.ribbonTitle, "Open Checklist (Develop)");
+  assert.ok(plugin.commands.every(({ name }) => name.includes("Checklist (Develop)")));
+  workspace.getLeavesOfType = (type) => {
+    assert.equal(type, "simple-checklist-develop");
+    return [];
+  };
+  plugin.refreshView();
+  plugin.applySettingsToViews();
+  await plugin.updateSetting("todoScope", "note");
+});
 
 test("existing installations default to the whole vault without an active note", async () => {
   const { plugin, workspace, files } = await fixture();

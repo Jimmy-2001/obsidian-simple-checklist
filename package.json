@@ -1,7 +1,7 @@
 {
-  "name": "obsidian-simple-checklist",
+  "name": "obsidian-simple-checklist-develop",
   "version": "1.10.12",
-  "description": "Obsidian plugin: side panel todo list",
+  "description": "Development fork of Simple Checklist with selectable todo scopes",
   "main": "main.js",
   "scripts": {
     "build": "node esbuild.config.mjs",

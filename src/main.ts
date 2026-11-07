@@ -22,7 +22,7 @@ import {
 // (The `moment.Moment` type from the original import is still used for typing.)
 const typedMoment = moment as unknown as typeof import("moment");
 
-const VIEW_TYPE = "checklist";
+const VIEW_TYPE = "simple-checklist-develop";
 
 interface TodoItem {
   file: TFile;
@@ -98,7 +98,7 @@ interface DragTodoPayload {
   occurrence: number;
 }
 
-const DRAG_MIME = "application/x-checklist-todo";
+const DRAG_MIME = "application/x-simple-checklist-develop-todo";
 
 // Drop position for moveTodo: next to `todo`, before it or after its nested
 // children. The moved todo takes `todo`'s indentation.
@@ -426,7 +426,7 @@ function isExternalUrl(target: string): boolean {
 }
 
 function createExternalLink(container: HTMLElement, label: string, href: string): void {
-  const link = container.createEl("a", { cls: "checklist-inline-link", text: label, href });
+  const link = container.createEl("a", { cls: "simple-checklist-develop-inline-link", text: label, href });
   link.setAttr("target", "_blank");
   link.setAttr("rel", "noopener noreferrer");
   link.addEventListener("click", (e) => { e.stopPropagation(); });
@@ -538,7 +538,7 @@ function renderTodoText(
           if (!markers.has(i)) continue;
           if (i > last) target.appendText(text.slice(last, i));
           target = target === container
-            ? container.createEl("mark", { cls: "checklist-inline-highlight" })
+            ? container.createEl("mark", { cls: "simple-checklist-develop-inline-highlight" })
             : container;
           last = i + 2;
           i++;
@@ -547,7 +547,7 @@ function renderTodoText(
         break;
       }
       case "wikilink": {
-        const link = target.createEl("a", { cls: "checklist-inline-link", text: token.label });
+        const link = target.createEl("a", { cls: "simple-checklist-develop-inline-link", text: token.label });
         link.addEventListener("click", (e) => { e.stopPropagation(); openLink(token.target, token.subpath, sourcePath); });
         break;
       }
@@ -555,7 +555,7 @@ function renderTodoText(
         if (isExternalUrl(token.target)) {
           createExternalLink(target, token.label, token.target);
         } else {
-          const link = target.createEl("a", { cls: "checklist-inline-link", text: token.label });
+          const link = target.createEl("a", { cls: "simple-checklist-develop-inline-link", text: token.label });
           link.addEventListener("click", (e) => { e.stopPropagation(); openLink(token.target, "", sourcePath); });
         }
         break;
@@ -563,7 +563,7 @@ function renderTodoText(
         createExternalLink(target, token.url, token.url);
         break;
       case "code":
-        target.createEl("code", { cls: "checklist-inline-code", text: token.code });
+        target.createEl("code", { cls: "simple-checklist-develop-inline-code", text: token.code });
         break;
     }
   }
@@ -585,7 +585,7 @@ function spawnConfetti(originEl: HTMLElement): void {
   const cx = rect.left + rect.width / 2;
   const cy = rect.top + rect.height / 2;
   for (let i = 0; i < 14; i++) {
-    const el = doc.body.createDiv({ cls: "checklist-confetti-particle" });
+    const el = doc.body.createDiv({ cls: "simple-checklist-develop-confetti-particle" });
     const size = 5 + Math.random() * 5;
     const angle = (i / 14) * 2 * Math.PI + (Math.random() - 0.5) * 0.4;
     const dist = 28 + Math.random() * 24;
@@ -653,11 +653,11 @@ class ChecklistView extends ItemView {
   }
 
   getViewType(): string { return VIEW_TYPE; }
-  getDisplayText(): string { return "Checklist"; }
+  getDisplayText(): string { return "Checklist (Develop)"; }
   getIcon(): string { return "check-square"; }
   onOpen(): Promise<void> {
     const container = this.contentEl;
-    const toolbar = container.createDiv({ cls: "checklist-scope" });
+    const toolbar = container.createDiv({ cls: "simple-checklist-develop-scope" });
     this.scopeDropdown = new DropdownComponent(toolbar)
       .addOptions(SCOPE_OPTIONS)
       .setValue(this.plugin.settings.todoScope)
@@ -665,7 +665,7 @@ class ChecklistView extends ItemView {
         if (isTodoScope(value)) void this.plugin.updateSetting("todoScope", value);
       });
     this.scopeDropdown.selectEl.setAttr("aria-label", "Todo scope");
-    this.scopeContextEl = toolbar.createDiv({ cls: "checklist-scope-context" });
+    this.scopeContextEl = toolbar.createDiv({ cls: "simple-checklist-develop-scope-context" });
     this.titleToggleEl = this.addAction("list", "Hide note titles", () => {
       void this.plugin.setHideNoteTitles(!this.plugin.settings.hideNoteTitles);
     });
@@ -690,12 +690,12 @@ class ChecklistView extends ItemView {
     for (const [key, row] of this.rowEls) {
       const parts = key.split("\0");
       if (parts[0] === filePath && completedTexts.has(parts[1])) {
-        const checkbox = row.querySelector<HTMLElement>(".checklist-checkbox");
+        const checkbox = row.querySelector<HTMLElement>(".simple-checklist-develop-checkbox");
         if (checkbox) spawnConfetti(checkbox);
         const groupEl = row.parentElement;
         row.remove();
         this.rowEls.delete(key);
-        if (groupEl && !groupEl.querySelector(".checklist-item")) {
+        if (groupEl && !groupEl.querySelector(".simple-checklist-develop-item")) {
           groupEl.remove();
           this.groupEls.delete(filePath);
         }
@@ -723,7 +723,7 @@ class ChecklistView extends ItemView {
       this.updateTitleToggle();
       const emptyText = this.plugin.getEmptyMessage();
       if (!this.emptyEl) {
-        this.emptyEl = container.createDiv({ cls: "checklist-empty", text: emptyText });
+        this.emptyEl = container.createDiv({ cls: "simple-checklist-develop-empty", text: emptyText });
       } else {
         this.emptyEl.setText(emptyText);
       }
@@ -731,7 +731,7 @@ class ChecklistView extends ItemView {
     }
     if (this.emptyEl) { this.emptyEl.remove(); this.emptyEl = null; }
     if (!this.wrapper) {
-      this.wrapper = container.createDiv({ cls: "checklist-container" });
+      this.wrapper = container.createDiv({ cls: "simple-checklist-develop-container" });
     }
     this.wrapper.classList.toggle("is-bare", this.plugin.settings.hideNoteTitles);
     this.updateTitleToggle();
@@ -807,25 +807,25 @@ class ChecklistView extends ItemView {
     }
 
     // ── Remove old dividers (stateless, re-inserted below) ───────────────────
-    this.wrapper.querySelectorAll(".checklist-divider").forEach(d => d.remove());
+    this.wrapper.querySelectorAll(".simple-checklist-develop-divider").forEach(d => d.remove());
 
     // ── Reconcile groups + items in desired order ─────────────────────────────
     for (let gi = 0; gi < orderedPaths.length; gi++) {
       const filePath = orderedPaths[gi];
       const items = grouped.get(filePath)!;
 
-      if (gi > 0) this.wrapper.appendChild(createDiv({ cls: "checklist-divider" }));
+      if (gi > 0) this.wrapper.appendChild(createDiv({ cls: "simple-checklist-develop-divider" }));
 
       // Get or create group element
       let groupData = this.groupEls.get(filePath);
       if (!groupData) {
-        const group = createDiv({ cls: "checklist-group" });
-        const header = group.createDiv({ cls: "checklist-group-header" });
-        const title = header.createDiv({ cls: "checklist-group-title", text: items[0].file.basename });
+        const group = createDiv({ cls: "simple-checklist-develop-group" });
+        const header = group.createDiv({ cls: "simple-checklist-develop-group-header" });
+        const title = header.createDiv({ cls: "simple-checklist-develop-group-title", text: items[0].file.basename });
         const titleFile = items[0].file;
         title.addEventListener("click", () => { void this.plugin.navigateToFile(titleFile); });
 
-        const pin = header.createDiv({ cls: "checklist-group-pin" });
+        const pin = header.createDiv({ cls: "simple-checklist-develop-group-pin" });
         setIcon(pin, "pin");
         pin.setAttr("aria-label", "Pin to top");
         pin.addEventListener("click", (e: MouseEvent) => {
@@ -857,7 +857,7 @@ class ChecklistView extends ItemView {
           this.rowEls.set(key, row);
         }
         // Set on every reconcile so re-indenting a todo in the note updates the row.
-        row.style.setProperty("--checklist-depth", String(todo.depth ?? 0));
+        row.style.setProperty("--simple-checklist-develop-depth", String(todo.depth ?? 0));
         this.rowTodos.set(row, todo);
         groupData.group.appendChild(row);
       }
@@ -888,10 +888,10 @@ class ChecklistView extends ItemView {
   // even when the next row is a nested child. Returns null when the drop would
   // leave the dragged todo where it is.
   private getDropTarget(groupEl: HTMLElement, e: DragEvent): { row: HTMLElement; after: boolean } | null {
-    const rows = Array.from(groupEl.querySelectorAll<HTMLElement>(":scope > .checklist-item"));
+    const rows = Array.from(groupEl.querySelectorAll<HTMLElement>(":scope > .simple-checklist-develop-item"));
     if (rows.length === 0) return null;
     const node = e.targetNode;
-    const over = node?.instanceOf(HTMLElement) ? node.closest<HTMLElement>(".checklist-item") : null;
+    const over = node?.instanceOf(HTMLElement) ? node.closest<HTMLElement>(".simple-checklist-develop-item") : null;
     let index = over ? rows.indexOf(over) : -1;
     let after = true;
     if (index < 0) {
@@ -908,7 +908,7 @@ class ChecklistView extends ItemView {
     // Same note: dropping onto the dragged todo itself or inside its nested
     // children does nothing. Right after its children it only matters if the
     // todo would be re-indented (it takes the indentation of the next row).
-    const dragged = rows.findIndex((r) => r.classList.contains("checklist-item-dragging"));
+    const dragged = rows.findIndex((r) => r.classList.contains("simple-checklist-develop-item-dragging"));
     if (dragged >= 0) {
       const depthOf = (i: number) => this.rowTodos.get(rows[i])?.depth ?? 0;
       let blockEnd = dragged + 1;
@@ -924,12 +924,12 @@ class ChecklistView extends ItemView {
   // (drawn with a pseudo-element, so nothing shifts). null hides it.
   private showDropIndicator(target: { row: HTMLElement; after: boolean } | null): void {
     if (this.dropIndicatorRow && this.dropIndicatorRow !== target?.row) {
-      this.dropIndicatorRow.classList.remove("checklist-drop-before", "checklist-drop-after");
+      this.dropIndicatorRow.classList.remove("simple-checklist-develop-drop-before", "simple-checklist-develop-drop-after");
     }
     this.dropIndicatorRow = target?.row ?? null;
     if (target) {
-      target.row.classList.toggle("checklist-drop-before", !target.after);
-      target.row.classList.toggle("checklist-drop-after", target.after);
+      target.row.classList.toggle("simple-checklist-develop-drop-before", !target.after);
+      target.row.classList.toggle("simple-checklist-develop-drop-after", target.after);
     }
   }
 
@@ -965,9 +965,9 @@ class ChecklistView extends ItemView {
   }
 
   private buildRow(todo: TodoItem, groupEl: HTMLElement, key: string, occurrence: number): HTMLElement {
-    const row = createDiv({ cls: "checklist-item" });
+    const row = createDiv({ cls: "simple-checklist-develop-item" });
 
-    const checkbox = row.createDiv({ cls: "checklist-checkbox" });
+    const checkbox = row.createDiv({ cls: "simple-checklist-develop-checkbox" });
     let completing = false;
     checkbox.addEventListener("click", (e: MouseEvent) => {
       e.stopPropagation();
@@ -978,7 +978,7 @@ class ChecklistView extends ItemView {
       void this.plugin.completeTodo(todo).then(() => {
         row.remove();
         this.rowEls.delete(key);
-        if (!groupEl.querySelector(".checklist-item")) {
+        if (!groupEl.querySelector(".simple-checklist-develop-item")) {
           groupEl.remove();
           this.groupEls.delete(todo.file.path);
         }
@@ -987,18 +987,18 @@ class ChecklistView extends ItemView {
       });
     });
 
-    const text = row.createDiv({ cls: "checklist-text" });
+    const text = row.createDiv({ cls: "simple-checklist-develop-text" });
     renderTodoText(text, todo.text, todo.file.path, (target, subpath, source) => {
       void this.plugin.app.workspace.openLinkText(target + subpath, source, false);
     });
     text.addEventListener("click", (e: MouseEvent) => {
       const target = e.targetNode;
-      if (!target?.instanceOf(HTMLElement) || !target.classList.contains("checklist-inline-link")) {
+      if (!target?.instanceOf(HTMLElement) || !target.classList.contains("simple-checklist-develop-inline-link")) {
         void this.plugin.navigateToTodo(todo);
       }
     });
 
-    const trash = row.createDiv({ cls: "checklist-trash" });
+    const trash = row.createDiv({ cls: "simple-checklist-develop-trash" });
     setIcon(trash, "trash");
     let deleting = false;
     trash.addEventListener("click", (e: MouseEvent) => {
@@ -1009,7 +1009,7 @@ class ChecklistView extends ItemView {
       void this.plugin.deleteTodo(todo).then(() => {
         row.remove();
         this.rowEls.delete(key);
-        if (!groupEl.querySelector(".checklist-item")) {
+        if (!groupEl.querySelector(".simple-checklist-develop-item")) {
           groupEl.remove();
           this.groupEls.delete(todo.file.path);
         }
@@ -1030,11 +1030,11 @@ class ChecklistView extends ItemView {
         } satisfies DragTodoPayload)
       );
       if (e.dataTransfer) e.dataTransfer.effectAllowed = "move";
-      row.classList.add("checklist-item-dragging");
+      row.classList.add("simple-checklist-develop-item-dragging");
       this.dragSourcePath = todo.file.path;
     });
     row.addEventListener("dragend", () => {
-      row.classList.remove("checklist-item-dragging");
+      row.classList.remove("simple-checklist-develop-item-dragging");
       this.dragSourcePath = null;
       this.showDropIndicator(null);
     });
@@ -1082,11 +1082,11 @@ export default class ChecklistPlugin extends Plugin {
   async onload(): Promise<void> {
     await this.loadSettings();
     this.registerView(VIEW_TYPE, (leaf) => new ChecklistView(leaf, this));
-    this.addRibbonIcon("check-square", "Open Checklist", () => { void this.activateView(); });
-    this.addCommand({ id: "open-checklist", name: "Open Checklist panel", callback: () => { void this.activateView(); } });
+    this.addRibbonIcon("check-square", "Open Checklist (Develop)", () => { void this.activateView(); });
+    this.addCommand({ id: "open-checklist", name: "Open Checklist (Develop) panel", callback: () => { void this.activateView(); } });
     this.addCommand({
       id: "toggle-note-titles",
-      name: "Toggle note titles in Checklist panel",
+      name: "Toggle note titles in Checklist (Develop) panel",
       callback: () => { void this.setHideNoteTitles(!this.settings.hideNoteTitles); },
     });
     this.addSettingTab(new ChecklistSettingTab(this.app, this));
